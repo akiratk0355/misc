@@ -38,6 +38,9 @@ for p in sieve:
     if p >= m:
         primes.append(p)
         print(p)
-            
+
+if len(primes) == 0:
+    print("No prime number exists in [%d, %d]" % (m, n))
+
 #print(sieve)
 #print(primes)  
