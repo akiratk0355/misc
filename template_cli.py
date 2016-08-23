@@ -37,6 +37,8 @@ def main(argv):
                         help="Log file name")
     parser.add_argument("-f", "--srcfile", action="store", metavar="FILE", dest="srcfile",
                         help="Source file path")
+    parser.add_argument("-o", "--outfile", action="store", metavar="FILE", dest="outfile",
+                        help="Output file path")
     parser.add_argument("-s", "--srcstr", action="append", metavar="STRING", dest="srcstr",
                         help="Source strings")
     parser.add_argument("-m", "--mode", action="store", type=int, metavar="MODENUM", default=0, dest="mode", 
@@ -45,7 +47,7 @@ def main(argv):
  
     # Logging setup
     logging_setup(args)
-    log_main = logging.getLogger('main')    
+    log_main = logging.getLogger('main')
     
     log_main.info("running in mode %d", args.mode)
     
@@ -59,7 +61,7 @@ def main(argv):
         log_main.debug("received strings: %s",  args.srcstr)
         # do_something(args.srcstr)
     
-    return 0            
+    return 0
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv[1:]))
