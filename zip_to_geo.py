@@ -3,6 +3,8 @@ Created on Jul 12, 2017
 
 @author: akira
 '''
+#!py_env/bin/python
+# python3
 
 import logging, logging.handlers
 import argparse
@@ -15,6 +17,8 @@ MAX_TRY = 5
 TIMEOUT = 10
 INTERVAL = 5
 GOOGLE_API_KEY = "YOUR API KEY"
+URL_ZC = "http://zipcloud.ibsnet.co.jp/api/search?zipcode={}"
+URL_GOOGLE = "https://maps.googleapis.com/maps/api/geocode/json?address={0}{1}{2}&key={3}"
 
 logger = logging.getLogger(__name__)
 
@@ -73,11 +77,9 @@ def main(argv):
     if args.zc:
         zc = args.zc
     
-    url = "http://zipcloud.ibsnet.co.jp/api/search?zipcode={}".format(zc)
-
-    r = rest_request(url)
+    r = rest_request(URL_ZC.format(zc))
     if not r:
-        log_main("request failed for zipcode")
+        log_main.error("request failed for zipcode")
         return 1
     
     data = r.json()
@@ -88,10 +90,9 @@ def main(argv):
     
     log_main.info("fetched %s, %s, %s", addr1, addr2, addr3)
     
-    url_ggl = "https://maps.googleapis.com/maps/api/geocode/json?address={0}{1}{2}&key={3}".format(addr1, addr2, addr3, GOOGLE_API_KEY)    
-    r = rest_request(url_ggl)
+    r = rest_request(URL_GOOGLE.format(addr1, addr2, addr3, GOOGLE_API_KEY))
     if not r:
-        log_main("request failed for geocode")
+        log_main.error("request failed for geocode")
         return 1
     
     data = r.json()
